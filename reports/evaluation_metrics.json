@@ -1,0 +1,19 @@
+{
+  "k": 10,
+  "overall": {
+    "users": 250,
+    "recall@10": 0.688,
+    "ndcg@10": 0.319804
+  },
+  "cross_category": {
+    "users": 166,
+    "recall@10": 0.608434,
+    "ndcg@10": 0.279924
+  },
+  "same_category": {
+    "users": 84,
+    "recall@10": 0.845238,
+    "ndcg@10": 0.398615
+  },
+  "cross_category_definition": "held-out item's category differs from the user's most frequent training category"
+}

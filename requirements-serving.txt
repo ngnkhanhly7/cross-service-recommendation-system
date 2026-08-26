@@ -1,0 +1,9 @@
+# Minimal runtime dependencies for src/api and src/serve only.
+# Training (implicit/torch/faiss/scikit-learn) stays out of the serving image on
+# purpose (see IMPROVEMENT_PLAN.md CP-I11) — train elsewhere, mount the artifact in.
+numpy>=1.26,<3
+pandas>=2.1,<3
+joblib>=1.3,<2
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+pydantic>=2.8,<3
