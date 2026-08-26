@@ -1,25 +1,27 @@
 {
   "k": 10,
   "overall": {
-    "users": 250,
-    "recall@10": 0.688,
-    "ndcg@10": 0.319804
+    "users": 16080,
+    "recall@10": 0.028856,
+    "ndcg@10": 0.016539
   },
   "cross_category": {
-    "users": 166,
-    "recall@10": 0.608434,
-    "ndcg@10": 0.279924
+    "users": 7222,
+    "recall@10": 0.021047,
+    "ndcg@10": 0.012216
   },
   "same_category": {
-    "users": 84,
-    "recall@10": 0.845238,
-    "ndcg@10": 0.398615
+    "users": 8858,
+    "recall@10": 0.035222,
+    "ndcg@10": 0.020065
   },
   "cross_category_definition": "held-out item's category differs from the user's most frequent training category",
   "model_type": "two_tower",
-  "embedding_dim": 32,
-  "epochs": 80,
+  "embedding_dim": 64,
+  "epochs": 15,
   "category_weight": 0.2,
-  "final_bpr_loss": 0.324728,
-  "faiss_index_saved": true
+  "final_bpr_loss": 0.26268,
+  "faiss_index_saved": true,
+  "data_provenance": "public_dataset",
+  "data_source": "amazon-hf"
 }

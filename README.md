@@ -200,14 +200,21 @@ Kết quả được lưu tại:
 - `reports/evaluation_metrics.json`
 - `reports/model_comparison.md`
 
-Kết quả demo hiện tại:
+Kết quả demo (dữ liệu mô phỏng, `data_provenance: synthetic_controlled` — chỉ để kiểm tra pipeline, không phải bằng chứng kinh doanh):
 
 | Model | Recall@10 overall | NDCG@10 overall | Recall@10 cross-category | NDCG@10 cross-category |
 |---|---:|---:|---:|---:|
 | ALS | 0.5680 | 0.2819 | 0.5361 | 0.2696 |
 | Two-Tower | 0.6880 | 0.3198 | 0.6084 | 0.2799 |
 
-Đây là kết quả trên dữ liệu demo/mô phỏng để kiểm tra pipeline. Khi chạy Amazon Reviews thật, cần report lại metric mới.
+Kết quả thật trên Amazon Reviews 2023 (`data_provenance: public_dataset`, categories `All_Beauty`/`Electronics`/`Home_and_Kitchen`/`Grocery_and_Gourmet_Food`, `--max-rows-per-category 250000`, sau lọc còn 16,261 user đa category, 298,387 interaction):
+
+| Model | Recall@10 overall | NDCG@10 overall | Recall@10 cross-category | NDCG@10 cross-category |
+|---|---:|---:|---:|---:|
+| ALS | 0.0251 | 0.0156 | 0.0249 | 0.0157 |
+| Two-Tower | 0.0289 | 0.0165 | 0.0210 | 0.0122 |
+
+**Đọc kết quả thật này một cách trung thực:** giả thuyết chính của project — category embedding giúp Two-Tower gợi ý cross-category tốt hơn — **không được xác nhận trên dữ liệu thật**. Two-Tower cross-category (0.0210) thấp hơn cả ALS cross-category (0.0249) và thấp hơn chính Two-Tower same-category (0.0352), ngược lại hoàn toàn so với kết quả trên dữ liệu mô phỏng. Lý do nhiều khả năng: category của Amazon (nhóm sản phẩm) không mang tính "hành trình dịch vụ nối tiếp nhau" như kịch bản mô phỏng (taxi → khách sạn) — không có cơ sở tự nhiên để việc mua đồ điện tử dự đoán được việc mua mỹ phẩm, nên feature category-embedding gây nhiễu nhiều hơn là giúp ích cho đúng phần cross-category. Recall tuyệt đối thấp (~0.02-0.03) cũng phản ánh catalog 48k item và cấu hình mặc định (`epochs=15`, `embedding_dim=64`, `category_weight=0.2`) chưa được tune cho quy mô này — chưa thử tăng epoch, tune `category_weight`, hay lọc catalog theo phổ biến trước khi kết luận đây là giới hạn cứng của kiến trúc.
 
 ## API serving
 
