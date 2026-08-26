@@ -67,10 +67,13 @@ def load_amazon_reviews(
             "Install the optional data dependency first: pip install datasets"
         ) from exc
 
+    from tqdm import tqdm
+
     categories = categories or AMAZON_DEFAULT_CATEGORIES
     frames: list[pd.DataFrame] = []
     for category in categories:
         config = f"raw_review_{category}"
+        print(f"Streaming {config} (up to {max_rows_per_category:,} rows)...", flush=True)
         dataset = load_dataset(
             "McAuley-Lab/Amazon-Reviews-2023",
             config,
@@ -80,7 +83,9 @@ def load_amazon_reviews(
         )
         iterator: Iterator[dict] = iter(dataset)
         records = []
-        for index, row in enumerate(iterator):
+        for index, row in enumerate(
+            tqdm(iterator, total=max_rows_per_category, desc=category, unit="row")
+        ):
             if index >= max_rows_per_category:
                 break
             records.append(row)

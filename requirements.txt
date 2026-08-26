@@ -9,6 +9,7 @@ pyarrow>=15,<24
 # are no longer supported" on datasets>=4) — pin below 4 until the dataset repo
 # migrates to a script-less config.
 datasets>=3,<4
+tqdm>=4.66,<5
 
 # Recommenders
 implicit>=0.7.2,<0.8
