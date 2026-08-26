@@ -156,7 +156,7 @@ Lưu ý phạm vi: **Giai đoạn B (CP7-9 trong README) là ghép nhiều datas
 **Report:**
 - File workflow tồn tại; 1 lần chạy CI (screenshot hoặc link) hiển thị pass trên push thử nghiệm.
 
-**Trạng thái: 🟡 Workflow đã viết, chưa chạy trên GitHub thật.** [.github/workflows/ci.yml](.github/workflows/ci.yml) có job `test` (pytest) và `lint` (ruff bắt buộc pass, mypy advisory). Chưa verify được lần chạy thật trên GitHub Actions vì repo hiện chưa init git/chưa có remote — cần push lên GitHub rồi xác nhận 1 lần chạy xanh mới coi là done đầy đủ.
+**Trạng thái: ✅ Done.** Repo đã push lên [github.com/ngnkhanhly7/cross-service-recommendation-system](https://github.com/ngnkhanhly7/cross-service-recommendation-system). 3 lần chạy CI đều xanh (`test` + `lint` job pass) — verify bằng ảnh chụp tab Actions, tất cả có dấu ✓ xanh.
 
 ---
 
@@ -197,3 +197,9 @@ Lưu ý phạm vi: **Giai đoạn B (CP7-9 trong README) là ghép nhiều datas
 2. CP-I4 (P1, phải xong trước khi ai đó nghĩ tới chạm dữ liệu thật)
 3. CP-I3 → CP-I5 → CP-I8 → CP-I9 (P1, chuẩn bị cho việc trình bày/vận hành + có lưới an toàn CI trước khi thay đổi nhiều)
 4. CP-I6 → CP-I7 → CP-I10 → CP-I11 (P2, củng cố sau khi phần lõi đã chắc)
+
+---
+
+## Tổng kết trạng thái (2026-08-27)
+
+**11/11 checkpoint done.** Repo: [github.com/ngnkhanhly7/cross-service-recommendation-system](https://github.com/ngnkhanhly7/cross-service-recommendation-system), CI xanh, `pytest -q` 22/22 pass, `ruff`/`mypy` sạch, Docker build+run đã verify thật.
