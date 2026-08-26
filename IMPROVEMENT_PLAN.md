@@ -187,7 +187,7 @@ Lưu ý phạm vi: **Giai đoạn B (CP7-9 trong README) là ghép nhiều datas
 **Report:**
 - `docker build` thành công, `docker run` phục vụ được 1 request `/health` trả 200.
 
-**Trạng thái: 🟡 Code viết xong, chưa verify build được.** [Dockerfile](Dockerfile) + [requirements-serving.txt](requirements-serving.txt) (tập dependency rút gọn, cố ý loại `torch`/`faiss`/`implicit` khỏi image phục vụ — training không chạy trong container này) + [.dockerignore](.dockerignore). `docker build` không chạy được trong môi trường này vì Docker daemon không hoạt động (`docker --version` OK nhưng daemon không kết nối được) — cần verify `docker build` + `docker run` trên máy có Docker Desktop đang chạy trước khi coi checkpoint này là done thật.
+**Trạng thái: ✅ Done — build + run thật đã verify.** [Dockerfile](Dockerfile) + [requirements-serving.txt](requirements-serving.txt) (tập dependency rút gọn, cố ý loại `torch`/`faiss`/`implicit` khỏi image phục vụ) + [.dockerignore](.dockerignore). Verify: `docker build` thành công (~20s cài dependency); `docker run` + mount `models/multi_service_als_smoke.pkl` → `curl /health` trả `{"status":"ok"}`, `curl /recommend/sim_user_000001` trả gợi ý kèm `data_provenance`/`caution` đúng như thiết kế CP-I1. Phát hiện thêm 1 vấn đề thật khi test trên Windows + Git Bash: biến môi trường `MODEL_PATH=/app/...` bị Git Bash tự dịch sang đường dẫn Windows trước khi vào container (`C:/Program Files/.../app/models/...`) — đã ghi lại cách né (`MSYS_NO_PATHCONV=1`) trong README, đây là vấn đề của shell Windows, không phải bug trong Dockerfile/code.
 
 ---
 

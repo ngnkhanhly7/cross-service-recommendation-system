@@ -253,6 +253,20 @@ API_KEY=secret123 RATE_LIMIT_PER_MINUTE=120 uvicorn src.api.main:app --host 0.0.
 curl -X POST -H "X-API-Key: secret123" http://127.0.0.1:8000/reload-model
 ```
 
+### Container hoá (serving only)
+
+`Dockerfile` chỉ đóng gói phần serving (`requirements-serving.txt`: numpy, pandas, joblib, fastapi, uvicorn, pydantic) — không cài `torch`/`implicit`/`faiss-cpu`. Train vẫn chạy ngoài container (máy local/Colab) rồi mount artifact vào.
+
+```bash
+docker build -t cross-service-rec .
+docker run -p 8000:8000 \
+  -e MODEL_PATH=/app/models/als_v1.pkl \
+  -v "$(pwd)/models:/app/models" \
+  cross-service-rec
+```
+
+Đã build + chạy thử thành công (`/health` → 200, `/recommend/<user>` trả gợi ý kèm `data_provenance`). Lưu ý nếu chạy lệnh trên bằng **Git Bash trên Windows**: Git Bash tự dịch các đường dẫn kiểu Unix (`/app/...`) trong biến môi trường sang đường dẫn Windows trước khi truyền vào container, làm sai `MODEL_PATH`. Nếu gặp lỗi "No trained artifact at C:/Program Files/...", thêm `MSYS_NO_PATHCONV=1` trước lệnh `docker run` (PowerShell/CMD/Linux/macOS không bị ảnh hưởng).
+
 ## Chạy trên Colab Pro
 
 Nên lưu code trong GitHub hoặc Google Drive. Notebook chỉ dùng như terminal chạy lệnh, không đặt logic train trong cell.
